@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="icon" type="image/png" href="./icon/weather.png">
+</head>
+
+<style>
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #0b66bb;
+    color: white;
+  }
+  .main-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+  }
+  .title-container {
+    display:flex;
+    height:100%;
+    width:100%;
+    justify-content:center;
+    align-items:center;
+}
+.info-container {
+    text-align: center;
+    display: block;
+    border-radius: 30px;
+    border: 2px solid #333;
+    width: 50%;
+}
+</style>
+
+<body>
+    <div class="topnav">
+        <a href="/">Mapa Completo</a>
+        <a class="active" href="/about">About</a>
+    </div>
+    <div class="main-container">
+        <div class="title-container">
+            <img src="./icon/logo-tec.png" alt="">
+        </div>
+        <div class="info-container">
+            <h2>Información</h2>
+            <h3>Curso: Sistemas de Información Geográfica</h3>
+            <h3>Estudiantes:</h3>
+            <h3>Bryan Pérez</h3>
+            <h3>Jhonn Solis</h3>
+        </div>
+    </div>
+</body>
+</html>
