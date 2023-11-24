@@ -1,7 +1,7 @@
-# Proyecto3SIG
+# Proyecto 3 | Sistemas de Información Geográfica
 
 Estudiantes:
-Bryan Pérez Rojas
+Bryan Pérez Rojas - 
 Jhonn Solís Castro
 
 Cantón seleccionado:
