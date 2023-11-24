@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        function alertUser(msg) {
+        alert(msg);
+        }
+        </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turrialba</title>
@@ -9,7 +14,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 <style>
     #map{
-        height: 98vh;
+        height: 70vh;
         width: 100%;
     }
     .info {
@@ -63,28 +68,46 @@
   background-color: #0b66bb;
   color: white;
 }
+.note{
+    border: thick double #32a1ce;
+    border-radius: 30px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    text-align: center;
+}
 </style>
 </head>
+<body onload="alertUser('Por favor esperar un momento al cargar una nueva capa!' )"></body>
 
 <body>
     <div class="topnav">
         <a class="active" href="#home">Mapa Completo</a>
         <a href="/about">About</a>
     </div>
+    <div class="note"> 
+        <h1>Nota</h1>
+        <p>En el botón que se encuentra en la parte superior derecha puede 
+            seleccionar la capa a visualizar, realizamos dos,  la diferencia entre 
+            ellas <br> es que una tiene las capas de elevación, hillshade y slope. La que no 
+            tiene estas capas puede ser visualizada con zoom hasta 20. La cantidad<br> de datos 
+            extraídos de OpenStreetMap se vio límitado a la página para convertir osm a
+            geojson ya que solo permite convertir 5 archivos<br> de menos de 5mb al mes de manera gratuita.</p>
+    </div>
     <div id="map"></div>
 </body>
 </html>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script src="./data/thailand.js"></script>
-<script src="./data/bestWeather.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
+<script src="https://unpkg.com/Leaflet.TileLayer.MBTiles@1.0.0/Leaflet.TileLayer.MBTiles.js"></script>
+
 <script>
 
     /*===================================================
                       OSM  LAYER               
 ===================================================*/
 
-var map = L.map('map').setView([11.611323721500769, 99.53442294137801], 6);
+var map = L.map('map').setView([9.808326899536596, -83.52307540960562], 12);
 var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 });
@@ -94,9 +117,9 @@ osm.addTo(map);
                       MARKER               
 ===================================================*/
 
-var singleMarker = L.marker([15.265096228276185, 100.76542451655753]);
+var singleMarker = L.marker([9.808326899536596, -83.52307540960562]);
 singleMarker.addTo(map);
-var popup = singleMarker.bindPopup('Tailandia')
+var popup = singleMarker.bindPopup('Cantón de Turrialba')
 popup.addTo(map);
 
 /*===================================================
@@ -125,34 +148,18 @@ noLayer = L.tileLayer("", {
 });
 noLayer.addTo(map);
 
+var mb = L.tileLayer.mbTiles('./data/turrialba_tiles_f45e4c.mbtiles').addTo(map);
 
+var mb2 = L.tileLayer.mbTiles('./data/turrialba_tiles_b6812b.mbtiles').addTo(map);
 
-
-
-/*===================================================
-                      GEOJSON               
-===================================================*/
-
-var thailandJSON = L.geoJSON(thailandJSON,{
-    onEachFeature: function(feature,layer){
-        layer.bindPopup('<b>Esto es: </b>' + feature.properties.name)
-    }
-}).addTo(map);
-var bestWeather = L.geoJSON(bestWeather,{
-    onEachFeature: function(feature,layer){
-        layer.bindPopup('<b>Ciudad: </b>' + feature.properties.name)
-    }, style: {
-        fillColor:"red",
-        opacity:"0.8",
-        color:"black"
-    }
-}).addTo(map);
 
 /*===================================================
                       LAYER CONTROL               
 ===================================================*/
 
 var baseLayers = {
+    "Turrialba":mb,
+    "Turrialba con Geo Hitos":mb2,
     "No Base Layer":noLayer,
     "Satellite":googleSat,
     "OpenStreetMap": osm,
@@ -160,8 +167,6 @@ var baseLayers = {
 };
 
 var overlays = {
-    "Tailandia":thailandJSON,
-    "Mejores Climas":bestWeather
 };
 
 L.control.layers(baseLayers, overlays).addTo(map);
